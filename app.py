@@ -516,8 +516,5 @@ def update_output(n_clicks, summoner_name_input):
 
 
 
-
-
-
 if __name__ == '__main__':
     app.run_server(debug=True)
