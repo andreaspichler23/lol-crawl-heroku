@@ -17,7 +17,7 @@ import requests
 # summoner_id = 'oS992syEwEl4RHwId4maA_Voz_uhvpk3BszwUiASzjEeXQ0' #frank
 # summoner_name_global = 'Frank Drebin'
 
-api_key = 'RGAPI-a297908e-4a42-4ce7-9465-ae0bb56e5ff7'
+# api_key = 'RGAPI-a297908e-4a42-4ce7-9465-ae0bb56e5ff7'
 
 # account_id = 'REwF0pRNRdEV0MCSVwEYBSwGy1s6jeEw3l7U39wg1oVQug' #beware
 # summoner_id = 'zI2FIMMuLs4IEYsaOm6zsLDmW2797EBBPw5jVN_UAswPUwI' #beware
@@ -51,7 +51,7 @@ def game_url_maker(api_key, game_id):
 
     return url
 
-def get_match_list(account_id):
+def get_match_list(account_id, api_key):
     url = matchlist_url_maker(api_key, account_id, 450, 0)
     response = requests.get(url)
     match_dict = response.json()['matches'] #list of dicts corresponding to matches
@@ -154,14 +154,14 @@ def get_player_game_info(api_key, game_id, account_id):
 
 
 
-def get_player_info(df_matchlist, account_id):
+def get_player_info(df_matchlist, account_id, api_key):
 
     list_player_info = []
     matchlist = df_matchlist['gameId'].to_numpy()
     counter = 0
     for game_id in matchlist:
         counter += 1
-        print(counter, game_id)
+        # print(counter, game_id)
         dict_player = get_player_game_info(api_key, game_id, account_id)
         list_player_info.append(dict_player)
         time.sleep(1.3)
@@ -172,21 +172,24 @@ def get_player_info(df_matchlist, account_id):
     
     return df_gameinfo
     
-def main(summoner_name, api_key):
+def main(summoner_name, api_key, df_frank, df_beware):
+
+    df_frank_f = df_frank.copy()
+    df_beware_f = df_beware.copy()
 
     if summoner_name == 'bewareoftraps':
-        df_gameinfo = pd.read_csv('game-data_beware.csv')
+        df_gameinfo = df_beware_f
     elif summoner_name == 'Frank Drebin':
-        df_gameinfo = pd.read_csv('game-data_frank.csv')
+        df_gameinfo = df_frank_f
     else:
         account_id = get_account_id(summoner_name, api_key)
-        df_matchlist = get_match_list(account_id)
+        df_matchlist = get_match_list(account_id, api_key)
         df_matchlist['time'] = pd.to_datetime(df_matchlist['timestamp'], unit='ms') 
-        df_gameinfo = get_player_info( df_matchlist, account_id )
+        df_gameinfo = get_player_info( df_matchlist, account_id, api_key )
 
-        summoner_name = summoner_name.replace(' ', '%20')
-        filename = summoner_name + '.csv'
-        df_gameinfo.to_csv(filename)
+        # summoner_name = summoner_name.replace(' ', '%20')
+        # filename = summoner_name + '.csv'
+        # df_gameinfo.to_csv(filename)
 
     return df_gameinfo
 

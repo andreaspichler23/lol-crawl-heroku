@@ -130,14 +130,11 @@ def generate_tooltip_data(df):
     return tooltip_data
 
 
-def define_variables(df_gameinfo, df_total_per_champ, df_champions, summoner_name_input):
+def define_variables(df_gameinfo, df_champions, summoner_name_input):
 
     df = df_gameinfo.copy()
+    df_champions_f = df_champions.copy()
 
-    # if summoner_name_input == 'bewareoftraps':
-    #     df = df_beware.copy()
-    # if summoner_name_input == 'Frank Drebin':
-    #     df = df_frank.copy()
 
     df['KDA'] = np.where(df['deaths']>0, (df['kills'] + df['assists']) / df['deaths'], df['kills'] + df['assists'])
     df = df.round({'KDA': 1})
@@ -158,11 +155,11 @@ def define_variables(df_gameinfo, df_total_per_champ, df_champions, summoner_nam
 
 
     # merge with champion dataframe ---------------------------------------------------------------
-    # print(df_champions.dtypes)
-    df_champions = df_champions.sort_values(by='champion')
 
-    lst_champ_names = df_champions.champion.values
-    df = df.merge(df_champions, how = 'inner', on = 'championId')
+    df_champions_f = df_champions_f.sort_values(by='champion')
+
+    lst_champ_names = df_champions_f.champion.values
+    df = df.merge(df_champions_f, how = 'inner', on = 'championId')
 
     # ------------------------------------------------------------
 
@@ -192,14 +189,16 @@ def define_variables(df_gameinfo, df_total_per_champ, df_champions, summoner_nam
 
 
     df = make_display_table(df)
-
     df_per_champ = make_per_champ_display_table(df_per_champ)
-    
-
-    tooltip_data = generate_tooltip_data(df)
+    # tooltip_data = generate_tooltip_data(df)
 
     # return df, gametime, lst_champ_names, df_both_players, df_per_champ, tooltip_data, day, hour, minutes, seconds
-    return df, gametime, lst_champ_names, df_per_champ, tooltip_data, day, hour, minutes, seconds
+    # return df, gametime, lst_champ_names, df_per_champ, tooltip_data, day, hour, minutes, seconds
+    # return df, lst_champ_names, df_per_champ, tooltip_data, day, hour, minutes, seconds
+    # return df, lst_champ_names, df_per_champ, day, hour, minutes, seconds
+    return df, df_per_champ, day, hour, minutes, seconds
+
+
     
 
 # def generate_table(dataframe, max_rows=10):
