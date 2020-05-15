@@ -49,7 +49,7 @@ def make_display_table(dataframe):
     df = df.rename( columns = {'kills': 'K', 'deaths': 'D', 'assists': 'A', 'totalDamageDealtToChampions': 'Damage To Champions', 'totalHeal': 'Heal'} )
     df = df.rename( columns = {'damageDealtToTurrets': 'Damage To Turrets', 'totalDamageTaken': 'Damage Taken', 'goldEarned': 'Gold'} )
     df = df.rename( columns = {'totalMinionsKilled': 'CS', 'dmgShare': 'Damage Share'} )
-    df = df.rename( columns = {'champion': 'Champion', 'win': 'Win', 'largestMultiKill': 'Largest Multi Kill', 'duo': 'Duo'} )
+    df = df.rename( columns = {'champion': 'Champion', 'win': 'Win', 'largestMultiKill': 'Largest Multi Kill'} )
 
     
 
@@ -158,12 +158,12 @@ def define_variables(df_gameinfo, df_champions, summoner_name_input):
 
     df_champions_f = df_champions_f.sort_values(by='champion')
 
-    lst_champ_names = df_champions_f.champion.values
+    # lst_champ_names = df_champions_f.champion.values
     df = df.merge(df_champions_f, how = 'inner', on = 'championId')
 
     # ------------------------------------------------------------
 
-    column_list = ['win', 'championId', 'champion', 'kills', 'deaths', 'assists', 'item0', 'item1', 'item2', 'item3', 'item4', 'item5', 'KDA', 'largestMultiKill', 'totalDamageDealtToChampions', 'totalHeal', 'damageDealtToTurrets', 'totalDamageTaken', 'goldEarned', 'totalMinionsKilled', 'gameDuration', 'gameCreation',  'gameCreation_dt', 'dmgShare', 'duo']
+    column_list = ['win', 'championId', 'champion', 'kills', 'deaths', 'assists', 'item0', 'item1', 'item2', 'item3', 'item4', 'item5', 'KDA', 'largestMultiKill', 'totalDamageDealtToChampions', 'totalHeal', 'damageDealtToTurrets', 'totalDamageTaken', 'goldEarned', 'totalMinionsKilled', 'gameDuration', 'gameCreation',  'gameCreation_dt', 'dmgShare']
     df = df[column_list]
 
     df['numberOfGames'] = 1 # dummie column, dropped later
@@ -172,7 +172,7 @@ def define_variables(df_gameinfo, df_champions, summoner_name_input):
     # creating the dataframe per champ -----------------------------------------------------------------------------------------
 
     df_dum = df.copy()
-    df_dum = df_dum.drop( columns = ['gameCreation', 'gameCreation_dt','duo'] )
+    df_dum = df_dum.drop( columns = ['gameCreation', 'gameCreation_dt'] )
     dict_agg = { key: 'mean' for key in df_dum.columns}
     dict_agg['champion'] = 'first'
     dict_agg['numberOfGames'] = 'sum'

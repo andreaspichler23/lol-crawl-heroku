@@ -19,7 +19,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 # external_stylesheets = ['C:/Users/U2JD7FU/Desktop/Private/Programmieren/Python/Lol/style.css']
 
 
-column_list = ['item0', 'item1', 'item2', 'item3', 'item4', 'item5', 'Win', 'Champion','K','D', 'A', 'KDA' ,'Largest Multi Kill','Damage To Champions', 'Heal', 'Damage To Turrets', 'Damage Taken', 'Gold', 'CS', 'gameDuration', 'gameCreation_dt', 'Damage Share', 'Duo']
+column_list = ['item0', 'item1', 'item2', 'item3', 'item4', 'item5', 'Win', 'Champion','K','D', 'A', 'KDA' ,'Largest Multi Kill','Damage To Champions', 'Heal', 'Damage To Turrets', 'Damage Taken', 'Gold', 'CS', 'gameDuration', 'gameCreation_dt', 'Damage Share']
 column_list_per_champ = ['Champion', 'Number of Games', 'Win Percentage','K','D', 'A', 'KDA' ,'Largest Multi Kill','Damage To Champions', 'Heal', 'Damage To Turrets', 'Damage Taken', 'Gold', 'CS', 'gameDuration', 'Damage Share']
 
 
@@ -116,7 +116,7 @@ app.layout = html.Div( children = [
 
     html.Div( style = {'padding': 50} ),
 
-    html.H5( children = 'A sortable table of all the ARAM games you played in the last 2 years' ),
+    html.H5( children = 'A sortable table of all the ARAM games you played in the last 2 years. Hover over the champion name to see the items you bought!' ),
 
     dash_table.DataTable(
         id='main_table',
