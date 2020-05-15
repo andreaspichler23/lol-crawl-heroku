@@ -370,7 +370,8 @@ def update_img(champ_name):
     if champ_name is not None:
         string_img = 'http://ddragon.leagueoflegends.com/cdn/10.7.1/img/champion/' + champ_name + '.png'
     else:
-        string_img = 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map12.png'
+    #     string_img = 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/map/map12.png'
+        string_img = ''
 
     return string_img
 
