@@ -194,7 +194,6 @@ def main(summoner_name, api_key, df_frank, df_beware):
     return df_gameinfo
 
 
-
 # summoner_name = 'Crudelmudel'
 # main(summoner_name, api_key)
 
